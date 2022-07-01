@@ -5,6 +5,19 @@ import Task from "../models/Task"
 
 const RouterI: Router = express.Router();
 
+RouterI.get("/:userId", Authentication, async (req: Request,res: Response) => {
+    try {
+        const task: ITask = await Task.findAll({where:{userId: req.params.userId}})
+        if(!task){
+            res.json({success:false,message:"Usuário não possui tarefas"})
+        }else{
+            res.json({task: task,success:true})
+        }
+    } catch (error: any) {
+        res.json({ success: false, message: error.stack })
+    }
+})
+
 RouterI.get("/:id", Authentication, async (req: Request,res: Response) => {
     try {
         const task: ITask = await Task.findOne({where:{id: req.params.id}})
