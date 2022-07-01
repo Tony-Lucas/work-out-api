@@ -5,7 +5,7 @@ import Task from "../models/Task"
 
 const RouterI: Router = express.Router();
 
-RouterI.get("/:userId", Authentication, async (req: Request,res: Response) => {
+RouterI.get("/all/:userId", Authentication, async (req: Request,res: Response) => {
     try {
         const task: ITask = await Task.findAll({where:{userId: req.params.userId}})
         if(!task){
