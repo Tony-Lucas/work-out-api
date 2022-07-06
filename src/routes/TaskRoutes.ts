@@ -11,7 +11,7 @@ RouterI.get("/all/:userId", Authentication, async (req: Request,res: Response) =
         if(!task){
             res.json({success:false,message:"Usuário não possui tarefas"})
         }else{
-            res.json({task: task,success:true})
+            res.json({tasks: task,success:true})
         }
     } catch (error: any) {
         res.json({ success: false, message: error.stack })
