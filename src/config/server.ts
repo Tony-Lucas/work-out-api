@@ -8,6 +8,7 @@ import userRoutes from "../routes/UserRoutes"
 import taskRoutes from "../routes/TaskRoutes"
 import projectRoutes from "../routes/ProjectRoutes"
 import projectTasksRoutes from "../routes/ProjectTasksRoutes"
+import UserProject from "../routes/UserProject"
 
 const app = express()
 
@@ -29,6 +30,7 @@ app.use("/user", userRoutes)
 app.use("/task", taskRoutes)
 app.use("/project", projectRoutes)
 app.use("/project-tasks", projectTasksRoutes)
+app.use("/user-project",UserProject)
 
 app.listen(3000, () => {
     console.log(process.env.SECRET_KEY)

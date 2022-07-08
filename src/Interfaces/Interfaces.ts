@@ -23,9 +23,9 @@ export interface ITask{
 export interface IProject{
     id: number,
     name: string,
-    adm_id: number,
     createdAt: string,
-    updatedAt: string
+    updatedAt: string,
+    owner: number,
 }
 
 export interface IProjectTasks{
@@ -45,5 +45,5 @@ export interface IUserProjects{
     userId: number,
     projectId: number,
     createdAt: string,
-    updatedAt: string
+    updatedAt: string,
 }

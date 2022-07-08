@@ -6,6 +6,10 @@ const Coments: any = sequelize.define("coments",{
         type:Sequelize.STRING,
         allowNull:false
     },
+    userId:{
+        type:Sequelize.INTEGER,
+        allowNull:false
+    }
 })
 
 export default Coments

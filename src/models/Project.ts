@@ -6,7 +6,7 @@ const Project: any = sequelize.define("projects",{
         type:Sequelize.STRING,
         allowNull:false
     },
-    admId:{
+    owner:{
         type:Sequelize.INTEGER,
         allowNull:false
     }

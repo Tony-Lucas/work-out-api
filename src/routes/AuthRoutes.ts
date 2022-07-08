@@ -14,7 +14,7 @@ Router.post("/", async (req: Request, res: Response) => {
         } else {
             const isPassword: boolean = await compareSync(req.body.password, hasUser.password)
             if (isPassword) {
-                const token = jwt.sign({email: hasUser.email,id: hasUser.id,name: hasUser.name}, process.env.SECRET_KEY,{ expiresIn: '24h' })
+                const token = jwt.sign({email: hasUser.email,id: hasUser.id,name: hasUser.name,imgUrl: hasUser.imgUrl}, process.env.SECRET_KEY,{ expiresIn: '24h' })
 
                 res.cookie("token", token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' ? true : false}).json({ success: true, user: hasUser,token: token })
             } else {
@@ -30,9 +30,9 @@ Router.get("/", async (req: Request, res: Response) => {
     try {
         const token: string = req.cookies.token;
         if (token) {
-            const decoded = jwt.verify(token, process.env.SECRET_KEY)
+            const decoded: any = jwt.verify(token, process.env.SECRET_KEY)
             if(decoded){
-                res.json({success:true,decoded: {id: decoded.id,}})
+                res.json({success:true,decoded: {user: decoded}})
             }else{
                 res.json({ success: false, message: "Token inválido" })
             }
