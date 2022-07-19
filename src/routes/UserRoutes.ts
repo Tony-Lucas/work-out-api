@@ -72,14 +72,15 @@ RouterI.post("/register", async (req: Request, res: Response) => {
 RouterI.post("/change-photo", Authentication, upload.single("img"), async (req: Request, res: Response) => {
     try {
         const user: IUser = await User.findOne({ where: { id: req.body.id } })
+        console.log(req.body)
         if (user.imgUrl) {
             const result = await deleteObjectS3(user.imgName)
             const fileName = await uploadToS3(req.file)
-            const userUpdated: IUser = await User.update({ imgName: fileName.Key, imgUrl: fileName.Location }, { where: { id: req.body.id } })
+            const userUpdated: IUser = await User.update({ imgName: fileName.Key, imgUrl: fileName.Location }, { where: { id: parseInt(req.body.id) } })
             res.json({ success: true, user: userUpdated })
         } else {
             const fileName = await uploadToS3(req.file)
-            const userUpdated: IUser = await User.update({ imgName: fileName.Key, imgUrl: fileName.Location }, { where: { id: req.body.id } })
+            const userUpdated: IUser = await User.update({ imgName: fileName.Key, imgUrl: fileName.Location }, { where: { id: parseInt(req.body.id) } })
             res.json({ success: true, user: userUpdated })
         }
     } catch (error: any) {
@@ -102,10 +103,10 @@ RouterI.get("/:id", Authentication, async (req: Request, res: Response) => {
 
 RouterI.put("/", Authentication, async (req: Request, res: Response) => {
     try {
-        const user: any = await User.update({ ...req.body }, { where: { id: req.body.id } })
+        const user: any = await User.update({ ...req.body }, { where: { id: req.body.id }, returning: true,plain: true })
+        console.log(user)
         if (user) {
-            const userUpdated: IUser = await User.findOne({ where: { id: req.body.id } })
-            res.json({ success: true, user: userUpdated })
+            res.json({ success: true, user: user })
         } else {
             res.json({ success: false, message: "Usuário não encontrado" })
         }
